@@ -97,6 +97,7 @@
             // 
             this.etPWcom.Location = new System.Drawing.Point(130, 151);
             this.etPWcom.Name = "etPWcom";
+            this.etPWcom.PasswordChar = '*';
             this.etPWcom.Size = new System.Drawing.Size(100, 21);
             this.etPWcom.TabIndex = 5;
             // 

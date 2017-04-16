@@ -139,18 +139,18 @@ namespace 笔记管理系统
 
         private void btnRegist_Click(object sender, EventArgs e)
         {
-            string strConnection = @"Server=B2_012\SQLEXPRESS;";
+            String strConnection = @"Server=DESKTOP-V900MGO;";
             strConnection += "initial catalog=NoteDB;";
             strConnection += "user id=sa;";
-            strConnection += "password=sa;";
+            strConnection += "password=lj123456;";
             SqlConnection con = new SqlConnection(strConnection);
 
-            String pw = etPW.Text;
-            String pw_con = etPWcom.Text;
-            String name = etUsername.Text;
+            String pw = etPW.Text.Trim();
+            String pw_con = etPWcom.Text.Trim();
+            String name = etUsername.Text.Trim();
             if (!name.Equals(""))
             {
-                if (pw.Equals(pw_con))
+                if (pw.Equals(pw_con) && pw!="")
                 {
                     
                     String insert = "insert into Users (username,password) values('"+name+"','"+pw+"')";
@@ -165,6 +165,7 @@ namespace 笔记管理系统
                     catch (Exception ex)
                     {
                         Console.WriteLine("{0} Exception caught.", ex);
+                        MessageBox.Show(ex.Message);
                     }
                 }
                 else if(pw.Equals("")){

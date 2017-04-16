@@ -831,28 +831,13 @@ namespace 笔记管理系统
                                              tbContent.SelectionFont.Style);
             }
         }
-
-        private void 剪切ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            tbContent.Cut();
-        }
-
-        private void 复制ToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            tbContent.Copy();
-        }
-
-        private void 粘贴ToolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-            tbContent.Paste();
-        }
         //选择图片插入到笔记中。
         private void btnPicture_Click(object sender, EventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Filter = "所有文件(*.*)|*.*" + "|JPEG(*.jpg;*.jpeg;*.jpe)|*.jpg;*.jpeg;*.jpe"+
+            fileDialog.Filter = "所有文件(*.*)|*.*" + "|JPEG(*.jpg;*.jpeg;*.jpe)|*.jpg;*.jpeg;*.jpe" +
                 "|位图文件(*.bmp)|*.bmp" + "|GIF(*.gif)|*.gif" + "|PNG(*.png)|*.png" + "|ICO(*.ico)|*.ico";
-            
+
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
                 string path = fileDialog.FileName;
@@ -861,7 +846,7 @@ namespace 笔记管理系统
                 tbContent.Paste();
             }
         }
-       
+
         //改变内容编辑框的背景色
         private void btnChangbg_Click(object sender, EventArgs e)
         {
@@ -885,6 +870,29 @@ namespace 笔记管理系统
         {
             tbContent.Redo();
         }
+
+        //以下四个方法是内容框的右键点击事件。
+        private void 剪切ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbContent.Cut();
+        }
+
+        private void 复制ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            tbContent.Copy();
+        }
+
+        private void 粘贴ToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            tbContent.Paste();
+        }
+        //点击右键，按“保存”
+        private void 保存ctrlsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveNote();
+        }
+
+       
         //关闭程序时的提醒设置。
         bool isSaved = false;
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
@@ -895,9 +903,9 @@ namespace 笔记管理系统
             strConnection += "user id=sa;";
             strConnection += "password=lj123456;";
             SqlConnection con = new SqlConnection(strConnection);
-            if (treeView1.SelectedNode != null)
+            if (treeView1.SelectedNode != null)//看看当前有没有选中那个节点
             {
-                if (treeView1.SelectedNode.Parent != null)
+                if (treeView1.SelectedNode.Parent != null)//表明选中的节点是一个笔记的标题。
                 {
                     string foldername = treeView1.SelectedNode.Parent.Text;
                     string title = tbTitle.Text;
@@ -910,12 +918,12 @@ namespace 笔记管理系统
                         con.Open();
 
                         SqlDataReader reader = command.ExecuteReader();
-                        while (reader.Read())
+                        while (reader.Read())//在数据库查询到相应的标题和文件夹名的笔记。
                         {
                             string content2 = Convert.ToString(reader[1]);
-                            if (content.Equals(content2))
+                            if (content.Equals(content2))//如果该笔记的内容跟数据库的一样
                             {
-                                isSaved = true;
+                                isSaved = true;//那就是已经保存好了
                             }
                             else
                             {
@@ -958,6 +966,7 @@ namespace 笔记管理系统
             
            
         }
+
         //在treeview中找到选定的节点可进行保存文件和笔记。
         public void searchNode(TreeNodeCollection node,TreeNode selectedNode)
         {
@@ -1035,6 +1044,8 @@ namespace 笔记管理系统
                 noteForm.ShowDialog();
                 if (noteForm.DialogResult == DialogResult.OK)
                 {
+                    //确定保存后，把folderDialog窗体的foldertree传到这里来。
+                    //保证了在那里创建的文件夹也能在Main窗体显示出来。
                     this.tv = noteForm.tv;
                     treeView1.Visible = true;
                     treeView1.Nodes.Clear();
@@ -1062,8 +1073,7 @@ namespace 笔记管理系统
         public TreeView tv;
         private void saveDoc_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show(Convert.ToString(tbContent.BackColor.B));
-            //tbTitle.Text = Convert.ToString(tbContent.BackColor);
+
             saveNote();
 
         }
@@ -1174,12 +1184,8 @@ namespace 笔记管理系统
                 this.Close();
             }
         }
-        //点击右键，按“保存”
-        private void 保存ctrlsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            saveNote();
-        }
-        //快捷键ctrl+S，保存笔记。
+   
+        //内容框的快捷键ctrl+S，保存笔记。
         private void tbContent_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyValue == 'S')
@@ -1187,13 +1193,20 @@ namespace 笔记管理系统
                 saveNote();
             }
         }
-
+        //点击菜单栏的新建->新建文档，之前所选的样式全部清空。
         private void 新建文档ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tbTitle.Text = "无标题";
             tbContent.Text = "添加新内容";
             tbContent.BackColor = Color.White;
             isUpdate = false;
+            tbContent.Font = new Font("宋体", 9, FontStyle.Regular);
+            btnBold.BackColor = Color.White;
+            btnItalic.BackColor = Color.White;
+            btnStrike.BackColor = Color.White;
+            btnUnderline.BackColor = Color.White;
+            cbFontName.Text = "宋体";
+            cbFontSize.Text = "9";
         }
     }
     

@@ -35,6 +35,7 @@
             this.新建文件夹ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.删除文件夹ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnConform = new System.Windows.Forms.Button();
+            this.treeView1 = new System.Windows.Forms.TreeView();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,11 +81,20 @@
             this.btnConform.UseVisualStyleBackColor = true;
             this.btnConform.Click += new System.EventHandler(this.btnConform_Click);
             // 
+            // treeView1
+            // 
+            this.treeView1.ContextMenuStrip = this.contextMenuStrip1;
+            this.treeView1.Location = new System.Drawing.Point(2, 12);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(356, 209);
+            this.treeView1.TabIndex = 3;
+            // 
             // FolderDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(359, 285);
+            this.Controls.Add(this.treeView1);
             this.Controls.Add(this.btnConform);
             this.Controls.Add(this.folderTree);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -103,5 +113,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 新建文件夹ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 删除文件夹ToolStripMenuItem;
+        private System.Windows.Forms.TreeView treeView1;
     }
 }

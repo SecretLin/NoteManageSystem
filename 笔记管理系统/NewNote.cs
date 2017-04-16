@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace 笔记管理系统
 {
+    //在Main窗体中按了“保存”之后就显示这个窗体。
     public partial class NewNote : Form
     {
         public NewNote()
@@ -21,13 +22,13 @@ namespace 笔记管理系统
         public TreeView tv;
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            //点击“浏览”，选择笔记要存放在哪个文件夹。
             FolderDialog folderDialog = new FolderDialog();
             folderDialog.tv = this.tv;
             folderDialog.ShowDialog();              
             if(folderDialog.DialogResult == DialogResult.OK)
             {
-                
+                //把选择文件夹窗体的foldertree给传回来，以及选中的文件夹的那个节点。
                 this.selectedNode = folderDialog.selectedNode;
                 tbFolderName.Text = folderDialog.selectedNode.Text;
                 this.tv = folderDialog.tv;
